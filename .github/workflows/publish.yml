@@ -25,7 +25,7 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Install mdzk 📝
-        uses: actions-rs/install@main
+        uses: actions-rs/install@master
         with:
           crate: mdzk
           version: latest
