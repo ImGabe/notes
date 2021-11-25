@@ -1,0 +1,27 @@
+[mdzk]
+authors = ["ImGabe"]
+description = "The place I share everything I know"
+language = "en"
+src = "notes"
+title = "My notes"
+
+[build]
+create-missing = false
+build-dir = "book"
+
+[output.html]
+cname = "notes.imgabe.me"
+default-theme = "basalt"
+preferred-dark-theme = "basalt"
+git-repository-icon = "fa-github"
+git-repository-url = "https://github.com/imgabe/notes"
+edit-url-template = "https://github.com/imgabe/notes/edit/master/{path}"
+no-section-label = true
+site-url = "/"
+
+[output.html.print]
+enable = false
+
+[output.html.fold]
+enable = true
+level = 1
