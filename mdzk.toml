@@ -1,9 +1,9 @@
 [mdzk]
-authors = ["ImGabe"]
-description = "The place I share everything I know"
-language = "en"
+title = "Minhas Notas"
+description = "Registro do que eu sei"
+authors = ["ImGabe <gabrielpmonte@gmail.com>"]
+language = "pt-br"
 src = "notes"
-title = "My notes"
 
 [build]
 create-missing = false
@@ -15,7 +15,7 @@ default-theme = "basalt"
 preferred-dark-theme = "basalt"
 git-repository-icon = "fa-github"
 git-repository-url = "https://github.com/imgabe/notes"
-edit-url-template = "https://github.com/imgabe/notes/edit/master/{path}"
+edit-url-template = "https://github.com/imgabe/notes/edit/main/{path}"
 no-section-label = true
 site-url = "/"
 
