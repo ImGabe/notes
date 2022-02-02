@@ -1,10 +1,14 @@
 ---
-date: 2021-11-26T00:00:00.000Z
+title: Revertendo string com emojis 😃
+created: 2021-11-26T00:00:00.000Z
+update: 2022-02-01T17:45:15.888Z
 tags:
   - javascript
+  - browser
+  - node.js
 ---
 
-# Não use `str.split("")`
+# Revertendo string com emojis 😃
 
 Quando queremos separar uma string letra por letra ou até mesmo reverter um texto utilizamos o método [`split()`](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/split), porém, existem diversos problemas em se utilizar este método, a própria documentação faz um breve comentário sobre [reverter uma String usando `split("")`](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/split#revertendo_uma_string_usando_split) não ser a melhor opção.
 
@@ -12,7 +16,7 @@ Quando queremos separar uma string letra por letra ou até mesmo reverter um tex
 
 Ao fazer `.split("")` a divisão não é feita "letra por letra" por conta da maneira que o Javascript lida com o strings esta divisão pode não ocorrer como o esperado.
 
-Por exemplo, enquanto esse emoji `😃` é representado por 2 caracteres javascript esse `😶‍🌫️` é por 6. Isso é:
+Por exemplo, enquanto este emoji `😃` é representado por 2 caracteres,  `😶‍🌫️` esse ocupa 6 caracteres. Isso é:
 
 ```javascript
 > "a".length
@@ -61,7 +65,7 @@ Array(4) [ "😶", "‍", "🌫", "️" ]
 
 Nesse método o [`Array.from`](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/from) te permite transformar a string em um array.
 
-* RegExp `u` flag
+* RegExp `u` flag[`String.prototype.split(" ")`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split)
 
 Nesse método é utilizado [RegExp](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/RegExp), não diria ser uma boa escolha pela legibilidade e compressão do código.
 
@@ -71,25 +75,28 @@ Nesse método, por conta do [`for...of`](https://developer.mozilla.org/pt-BR/doc
 
 ## Solução
 
-A única solução que encontrei com um amigo é utilizando o [Intl.Segmenter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter). E vai da sua criatividade para utiliza-lo:
+A solução recente que encontrei com um amigo é utilizando o [Intl.Segmenter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter). Que server para padronizar datas e textos de acordo com o local, [permitindo obter grafemas, palavras ou sentenças de forma precisa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter#basic_usage_and_difference_from_string.prototype.split).
 
 * Generator
 
 ```javascript=
-function* stringChars(s) { 
+function* splitEmoji(s) { 
   for (const ch of new Intl.Segmenter().segment(s)) 
     yield ch.segment;
 }
 
-console.log([...stringChars('😶‍🌫️')]) // [ '😶‍🌫️' ]
-console.log([...stringChars('👨‍👨‍👧‍👦')]) // [ '👨‍👨‍👧‍👦' ]
+console.log([...splitEmoji('😶‍🌫️ 🏁')].reverse()) // ['🏁', ' ', '😶‍🌫️']
+console.log([...splitEmoji('👨‍👨‍👧‍👦 🇧🇷')].reverse()) // ['🇧🇷', ' ', '👨‍👨‍👧‍👦']
 ```
 
-* Spread Operator
+* Spread Operator and Array.from
 
 ```javascript=
 const segmenter = new Intl.Segmenter()
 
-console.log([...segmenter.segment('😶‍🌫️')].map(({ segment }) => segment)) // [ '😶‍🌫️' ]
-console.log([...segmenter.segment('👨‍👨‍👧‍👦')].map(({ segment }) => segment))// [ '👨‍👨‍👧‍👦' ]
+console.log([...segmenter.segment('😶‍🌫️ 🏁')].map(({ segment }) => segment).reverse())
+// ['🏁', ' ', '😶‍🌫️']
+
+console.log(Array.from(segmenter.segment('👨‍👨‍👧‍👦 🇧🇷')).map(({ segment }) => segment).reverse())
+// ['🇧🇷', ' ', '👨‍👨‍👧‍👦']
 ```
