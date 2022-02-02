@@ -1,5 +1,9 @@
 ---
 title: Introdução
+created: 2021-11-26T00:00:00.000Z
+update: 
+tags:
+  - introduction
 ---
 
 # Introdução
@@ -11,7 +15,7 @@ Esse site tem a finalidade de registrar e compartilhar meus pensamentos e descob
 - Programação Funcional
 - NixOs
 - Rust/Go/Node.Js
-
+ 
 Pode entrar em contato comigo por:
 
 - [Email](mailto:gabrielpmonte@gmail.com)
