@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title></title>
-        <base href="/">
+        <title>Segmentador - Minhas Notas</title>
 
 
         <!-- Custom HTML head -->
@@ -14,20 +13,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -35,7 +34,7 @@
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "basalt" : "basalt";
         </script>
 
@@ -81,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><div>Javascript</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Internacionalizacao</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="Javascript/Internacionalizacao/Data e hora.html">Data e hora</a></li><li class="chapter-item "><a href="Javascript/Internacionalizacao/Intl.html">Internacionalização</a></li><li class="chapter-item "><a href="Javascript/Internacionalizacao/Listas.html">Listas</a></li><li class="chapter-item "><a href="Javascript/Internacionalizacao/Segmentador.html">Segmentador</a></li><li class="chapter-item "><a href="Javascript/Internacionalizacao/Tempo relativo.html">Tempo relativo</a></li></ol></li><li class="chapter-item "><a href="Javascript/Revertendo strings com emojis.html">Revertendo string com emojis 😃</a></li></ol></li><li class="chapter-item expanded "><a href="index.html">Introdução</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><div>Javascript</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><div>Internacionalizacao</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../Javascript/Internacionalizacao/Data e hora.html">Data e hora</a></li><li class="chapter-item "><a href="../../Javascript/Internacionalizacao/Intl.html">Internacionalização</a></li><li class="chapter-item "><a href="../../Javascript/Internacionalizacao/Listas.html">Listas</a></li><li class="chapter-item expanded "><a href="../../Javascript/Internacionalizacao/Segmentador.html" class="active">Segmentador</a></li><li class="chapter-item "><a href="../../Javascript/Internacionalizacao/Tempo relativo.html">Tempo relativo</a></li></ol></li><li class="chapter-item "><a href="../../Javascript/Revertendo strings com emojis.html">Revertendo string com emojis 😃</a></li></ol></li><li class="chapter-item expanded "><a href="../../index.html">Introdução</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -113,6 +112,9 @@
                         <a href="https://github.com/imgabe/notes" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+                        <a href="https://github.com/imgabe/notes/edit/main/notes/Javascript/Internacionalizacao/Segmentador.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -129,14 +131,51 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="segmentador"><a class="header" href="#segmentador">Segmentador</a></h1>
+<p>O segmentador identifica as letras/palavras/grafemas do idioma para realizar uma seperação adequada, beneficiando principalmente as linguas que não usam espaços entrem as palavras (Por exemplo: japonês, chinês, tailandês, etc).</p>
+<pre><code class="language-javascript">const phrase = &quot;Primeira linha.\nSegunda linha.\nTerceira linha.&quot;
+const segmenterWord = new Intl.Segmenter('pt-BR', { granularity: 'word' });
+
+Array.from(segmenterWord.segment(phrase)).map(({ segment }) =&gt; segment)
+// ['Primeira', ' ', 'linha', '.', '\n', 'Segunda', ' ', 'linha', '.', '\n', 'Terceira', ' ', 'linha', '.']
+
+const phrase = &quot;A\nB\nC.&quot;
+const segmenter = new Intl.Segmenter('pt-BR');
+
+Array.from(segmenter.segment(phrase)).map(({ segment }) =&gt; segment)
+// ['A', '\n', 'B', '\n', 'C', '.']
+</code></pre>
+<p>Também corrige os problemas do Javascript por utiliza UTF-16: <span class="missing-link" style="color:darkred;">Revertendo strings com emoji</span></p>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css" integrity="sha384-zTROYFVGOfTw7JV7KUu8udsvW2fx4lWOsCEDqhBreBwlHI4ioVRtmIvEThzJHGET" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.20/dist/katex.min.js" integrity="sha384-ov99pRO2tAc0JuxTVzf63RHHeQTJ0CIawbDZFiFTzB07aqFZwEu2pz4uzqL+5OPG" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var math = document.querySelectorAll("[class^=katex]");
+    for (var i = 0; i < math.length; i++) {
+      // Convert escaped ampersands before rendering
+      var toRender = math[i].textContent.replace(/&amp;/g, '&');
+      katex.render(toRender, math[i]);
+    }
+}, false)
+</script>
+<hr />
+<blockquote>
+<ul>
+<li><a href="Intl.html">Internacionalização</a></li>
+</ul>
+</blockquote>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../Javascript/Internacionalizacao/Listas.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next" href="../../Javascript/Internacionalizacao/Tempo relativo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -144,7 +183,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../Javascript/Internacionalizacao/Listas.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next" href="../../Javascript/Internacionalizacao/Tempo relativo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -158,9 +203,9 @@
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
 
