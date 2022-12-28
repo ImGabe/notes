@@ -20,7 +20,7 @@ jobs:
       - name: Install mdzk 📝
         uses: actions-rs/install@master
         with:
-          crate: mdzk@0.4.3
+          crate: mdzk@0.5.2
 
       - name: Build 🔧
         run: mdzk build
